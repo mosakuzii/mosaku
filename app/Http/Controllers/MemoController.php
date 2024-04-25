@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Log;
@@ -11,25 +10,21 @@ use App\Models\Memo;
 use App\Models\User;
 use App\Models\Tag;
 
-class MemoController extends Controller
-{
-    public function index(Request $request)
-    {
+class MemoController extends Controller{
+
+    public function index(Request $request){
         if(Auth::check()){
             $memos = Memo::with('tags')->where('user_id', Auth::id())->get();
             $tags = User::find(Auth::id())->tags;
-            return Inertia::render('Index', ['memos' => $memos, 'tags' => $tags]);
+            return Inertia::render('App', ['memos' => $memos, 'tags' => $tags]);
         }
         else{
             return redirect('entry');
         }
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         if(Auth::check()){
-            Log::debug('store with login');
-            
             $memo = Memo::create([
                 'user_id' => Auth::id(),
                 'title' => $request->title,
@@ -39,17 +34,17 @@ class MemoController extends Controller
             ]);
             $tags = collect($request->tags)->pluck('id')->filter()->unique();
             $memo->tags()->sync($tags);
+            $allMemos = Memo::with('tags')->where('user_id', Auth::id())->get();
+            return ['memoId' => $memo->id, 'allMemos' => $allMemos];
         }
         else{
             Log::debug('ログイン認証されていない');
         }
     }
 
-    public function update(Request $request)
-    {
+    public function update(Request $request){
         if(Auth::check()){
             if(Memo::where('id', $request->id)->where('user_id', Auth::id())->exists()){
-                Log::debug($request);
                 //TODO: ProfileController.phpを参考に、validated()を使って、ここの処理を簡易化できそう
                 $memo = Memo::find($request->id);
                 $memo->title = $request->title;
@@ -59,6 +54,8 @@ class MemoController extends Controller
                 $memo->save();
                 $tags = collect($request->tags)->pluck('id')->filter()->unique();
                 $memo->tags()->sync($tags);
+                $allMemos = Memo::with('tags')->where('user_id', Auth::id())->get();
+                return ['allMemos' => $allMemos];
             }
             else{
                 Log::debug('メモが見つからない、またはユーザ所有のメモではない');
@@ -69,12 +66,12 @@ class MemoController extends Controller
         }
     }
 
-    public function destroy(Request $request)
-    {
+    public function destroy($memo_id){
         if(Auth::check()){
-            if(Memo::where('id', $request->id)->where('user_id', Auth::id())->exists()){
-                Log::debug($request);
-                Memo::find($request->id)->delete();
+            if(Memo::where('id', $memo_id)->where('user_id', Auth::id())->exists()){
+                Memo::find($memo_id)->delete();
+                $allMemos = Memo::with('tags')->where('user_id', Auth::id())->get();
+                return ['allMemos' => $allMemos];
             }
             else{
                 Log::debug('メモが見つからない、またはユーザ所有のメモではない');

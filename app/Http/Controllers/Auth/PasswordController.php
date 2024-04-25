@@ -17,7 +17,18 @@ class PasswordController extends Controller
     {
         $validated = $request->validate([
             'current_password' => ['required', 'current_password'],
-            'password' => ['required', Password::defaults(), 'confirmed'],
+            'password' => [
+                'required',
+                Password::min(8)->mixedCase()->numbers(),
+                'confirmed',
+            ],
+        ], [
+            'current_password.current_password' => '現在のパスワードが正しくありません。',
+            'password.required' => '新しいパスワードを入力してください。',
+            'password.min' => '新しいパスワードは少なくとも:min文字以上である必要があります。',
+            'password.mixed_case' => '新しいパスワードには大文字と小文字の両方を含めてください。',
+            'password.numbers' => '新しいパスワードには数字を含めてください。',
+            'password.confirmed' => '新しいパスワードが確認用パスワードと一致しません。',
         ]);
 
         $request->user()->update([

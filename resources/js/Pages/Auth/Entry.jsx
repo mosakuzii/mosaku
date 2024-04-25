@@ -4,7 +4,6 @@ import InputLabel from '@/Components/InputLabel';
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
 
 export default function Entry({}) {
     const { data, setData, post } = useForm({
@@ -20,8 +19,9 @@ export default function Entry({}) {
     };
 
     return (
-        <GuestLayout>
-            <Head title="Entry" />
+        <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-green-50">
+        <div className="w-full sm:max-w-md mt-6 p-6 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <Head title="アクセスキー" />
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="accesskey" value="アクセスキー" />
@@ -32,22 +32,21 @@ export default function Entry({}) {
                         value={data.accesskey}
                         className="mt-1 block w-full"
                         isFocused={true}
-                        onChange={(e) => setData('accesskey', e.target.value)}
-                    />
+                        onChange={(e) => setData('accesskey', e.target.value)} />
                     <InputError message={errors.accesskey} className="mt-2" />
                 </div>
                 <div className="flex items-center justify-end mt-4">
                     <Link
                         href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        登録済みの方はこちら
+                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        ログイン画面はこちら
                     </Link>
                     <PrimaryButton className="ms-4">
                         送信
                     </PrimaryButton>
                 </div>
             </form>
-        </GuestLayout>
+        </div>
+        </div>
     );
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Memo;
 use App\Models\Tag;
 
 class TagController extends Controller
@@ -30,7 +31,9 @@ class TagController extends Controller
         if(Auth::check()){
             if(Tag::where('id', $tag_id)->where('user_id', Auth::id())->exists()){
                 Tag::find($tag_id)->delete();
-                return User::find(Auth::id())->tags;
+                $allTags = User::find(Auth::id())->tags;
+                $allMemos = Memo::with('tags')->where('user_id', Auth::id())->get();
+                return ['allMemos' => $allMemos, 'allTags' => $allTags];
             }
             else{
                 Log::debug('メモが見つからない、またはユーザ所有のメモではない');
@@ -41,15 +44,16 @@ class TagController extends Controller
         }
     }
 
-    public function update($tag_id, Request $request)
-    {
+    public function update(Request $request){
         if(Auth::check()){
-            if(Tag::where('id', $tag_id)->where('user_id', Auth::id())->exists()){
-                $tag = Tag::find($tag_id);
+            if(Tag::where('id', $request->id)->where('user_id', Auth::id())->exists()){
+                $tag = Tag::find($request->id);
                 $tag->tag_name = $request->tag_name;
                 $tag->tag_color = $request->tag_color;
                 $tag->save();
-                return User::find(Auth::id())->tags;
+                $allTags = User::find(Auth::id())->tags;
+                $allMemos = Memo::with('tags')->where('user_id', Auth::id())->get();
+                return ['allMemos' => $allMemos, 'allTags' => $allTags];
             }
             else{
                 Log::debug('メモが見つからない、またはユーザ所有のメモではない');
