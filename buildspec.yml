@@ -9,7 +9,6 @@ phases:
       - echo Installing dependencies...
       - sudo yum -y update
       - sudo yum -y install zip unzip
-      - cd /var/www/mosaku/
       - curl -sS https://getcomposer.org/installer | php
       - mv composer.phar /usr/local/bin/composer
 
