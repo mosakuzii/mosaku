@@ -23,7 +23,7 @@ phases:
       - composer install --no-interaction --prefer-dist
       - php artisan key:generate
       - npm install
-      - npm run prod
+      - npm run build
 
   post_build:
     commands:
