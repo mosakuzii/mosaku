@@ -7,8 +7,8 @@ phases:
       nodejs: 18
     commands:
       - echo Installing dependencies...
-      - apt-get update -y
-      - apt-get install -y zip unzip
+      - sudo yum -y update
+      - sudo yum -y install zip unzip
       - cd /var/www/mosaku/
       - curl -sS https://getcomposer.org/installer | php
       - mv composer.phar /usr/local/bin/composer
