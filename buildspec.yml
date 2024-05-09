@@ -1,0 +1,54 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      php: 8.2
+      nodejs: 18
+    commands:
+      - echo Installing dependencies...
+      - apt-get update -y
+      - apt-get install -y zip unzip
+      - cd /var/www/mosaku/
+      - curl -sS https://getcomposer.org/installer | php
+      - mv composer.phar /usr/local/bin/composer
+
+  pre_build:
+    commands:
+      - echo Starting pre-build phase...
+      - cp .env.example .env
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - composer install --no-interaction --prefer-dist
+      - php artisan key:generate
+      - npm install
+      - npm run prod
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+
+artifacts:
+  files:
+    - app/**
+    - bootstrap/**
+    - config/**
+    - database/**
+    - public/**
+    - resources/**
+    - routes/**
+    - storage/**
+    - vendor/**
+    - .env
+    - artisan
+    - composer.json
+    - composer.lock
+    - package.json
+    - webpack.mix.js
+
+cache:
+  paths:
+    - vendor/**
+    - node_modules/**
