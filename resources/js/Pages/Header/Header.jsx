@@ -1,13 +1,16 @@
 import Dropdown from '@/Components/Dropdown';
-import { ArrowLeftStartOnRectangleIcon, Cog6ToothIcon } from '@heroicons/react/20/solid';
+import { ArrowLeftStartOnRectangleIcon, Cog6ToothIcon, EnvelopeIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 import SettingModal from './Setting/SettingModal';
+import SuggestionModal from './Suggestion/SuggestionModal';
 
 export default function Header({user}){
-    const [open, setOpen] = useState(false);
+    const [openSetttingModal, setOpenSetttingModal] = useState(false);
+    const [openSuggestionModal, setOpenSuggestionModal] = useState(false);
     return (
         <div className="flex items-center justify-between">
-            <SettingModal user={user} open={open} onClose={() => setOpen(false)} />
+            <SettingModal user={user} open={openSetttingModal} onClose={() => setOpenSetttingModal(false)} />
+            <SuggestionModal user={user} open={openSuggestionModal} onClose={() => setOpenSuggestionModal(false)} />
             <img src="/images/logo.png" className="h-12 w-12" />
             <Dropdown>
                 <Dropdown.Trigger>
@@ -29,8 +32,11 @@ export default function Header({user}){
                     </span>
                 </Dropdown.Trigger>
                 <Dropdown.Content>
-                    <Dropdown.Item onClick={() => setOpen(true)} className="flex items-center cursor-pointer">
+                    <Dropdown.Item onClick={() => setOpenSetttingModal(true)} className="flex items-center cursor-pointer">
                         <Cog6ToothIcon className="h-4 w-4 mr-2" />設定
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={() => setOpenSuggestionModal(true)} className="flex items-center cursor-pointer">
+                        <EnvelopeIcon className="h-4 w-4 mr-2" />目安箱
                     </Dropdown.Item>
                     <Dropdown.Link href={route('logout')} method="post" className="flex items-center cursor-pointer">
                         <ArrowLeftStartOnRectangleIcon className="h-4 w-4 mr-2" />ログアウト

@@ -66,7 +66,7 @@ export default function MemoHeader({}) {
                             className="flex items-center cursor-pointer"
                             onClick={() => deleteMemo(formMemo.id)}>
                                 <TrashIcon className="h-4 w-4 mr-1" />
-                                メモを削除
+                                削除
                         </Dropdown.Item>}
                 </Dropdown.Content>
             </Dropdown>

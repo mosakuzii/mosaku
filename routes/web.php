@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AccesskeyController;
 use App\Http\Controllers\MemoController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\SuggestionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,6 +23,9 @@ Route::delete('/memo/delete/{memo_id}', [MemoController::class, 'destroy'])->nam
 
 //タグCRUD
 Route::resource('/tag', TagController::class);
+
+//目安箱送信
+Route::post('/suggestion', [SuggestionController::class, 'post'])->name('suggestion.post');
 
 Route::get('/entry', [AccesskeyController::class, 'entry'])->name('entry');
 Route::post('/verify-accesskey', [AccesskeyController::class, 'verifyAccesskey'])->name('accesskey.verify');

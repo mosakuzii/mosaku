@@ -47,13 +47,15 @@ class User extends Authenticatable
         ];
     }
 
-    public function memos(): HasMany
-    {
+    public function memos(): HasMany{
         return $this->hasMany(Memo::class);
     }
 
-    public function tags(): HasMany
-    {
+    public function tags(): HasMany{
         return $this->hasMany(Tag::class);
+    }
+
+    public function suggestions(): HasMany{
+        return $this->hasMany(Suggestion::class);
     }
 }

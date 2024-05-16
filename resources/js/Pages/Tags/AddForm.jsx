@@ -32,7 +32,6 @@ export default function AddForm(){
                     placeholder="新しいタグ名を入力"
                     value={data.tag_name}
                     className="w-full"
-                    autoComplete="username"
                     isFocused={true}
                     onChange={(e) => setData('tag_name', e.target.value)}
                 />

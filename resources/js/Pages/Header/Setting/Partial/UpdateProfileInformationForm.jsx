@@ -26,7 +26,7 @@ export default function UpdateProfileInformationForm({user}){
                         className="mt-1 block w-full"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
-                        placeholder="User Name"
+                        placeholder="ユーザ名"
                         required
                         isFocused
                         autoComplete="name"

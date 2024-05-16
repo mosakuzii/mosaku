@@ -1,5 +1,5 @@
 import { Head } from '@inertiajs/react';
-import Header from './Header';
+import Header from './Header/Header';
 import Memo from './Memo/Memo';
 
 export default function App({ auth, memos, tags }) {
