@@ -1,12 +1,11 @@
-
-# <img src="./public/images/logo.png" style="height:80px">Mosaku 
-<a href="https://mosaku.life">mosaku.life</a>
+# Mosaku
+<a href="https://mosaku.life">https://mosaku.life</a>
 
 ## Mosakuとは
 
-Mosakuは、メモアプリです。
-現時点(2024/05/25)では、メモのCRUD(Create,Read,Update,Delete)とメモに付与するタグのCRUDが実装されています。
-気持ち良く言葉を書けるアプリを目指し開発しています。
+Mosakuは、メモアプリです。  
+現時点(2024/05/25)では、メモのCRUD(Create,Read,Update,Delete)とメモに付与するタグのCRUDが実装されています。  
+気持ち良く言葉を書けるアプリを目指し開発しています。  
 
 ## 使用技術
 
@@ -33,12 +32,13 @@ Mosakuは、メモアプリです。
 - ログイン/ログアウト機能
 - メモCRUD機能
 - タグ付与機能
-- タグCRUD機能
+- タグCRUD機能  
+※現在ノートブック機能を実装中
 
 ## スクリーンショット
 <img src="./README_screenshot.png">
 
 ## ユーザ登録方法
 以下のメールアドレスにお問い合わせ下さい。
-アクセスキーをお送りします。
+アクセスキーをお送りします。  
 mosaku.contact@gmail.com
