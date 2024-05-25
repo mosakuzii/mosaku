@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Memo;
+use App\Models\Notebook;
 use App\Models\User;
 use App\Models\Tag;
 
@@ -15,8 +16,9 @@ class MemoController extends Controller{
     public function index(Request $request){
         if(Auth::check()){
             $memos = Memo::with('tags')->where('user_id', Auth::id())->get();
+            $notebooks = Notebook::where('user_id', Auth::id())->get();
             $tags = User::find(Auth::id())->tags;
-            return Inertia::render('App', ['memos' => $memos, 'tags' => $tags]);
+            return Inertia::render('App', ['memos' => $memos, 'notebooks' => $notebooks, 'tags' => $tags]);
         }
         else{
             return redirect('entry');

@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AccesskeyController;
 use App\Http\Controllers\MemoController;
+use App\Http\Controllers\NotebookController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\SuggestionController;
 use Illuminate\Foundation\Application;
@@ -23,6 +25,12 @@ Route::delete('/memo/delete/{memo_id}', [MemoController::class, 'destroy'])->nam
 
 //タグCRUD
 Route::resource('/tag', TagController::class);
+
+//ノートブックAPI
+Route::resource('/notebook', NotebookController::class);
+
+//ページAPI
+Route::resource('/page', PageController::class);
 
 //目安箱送信
 Route::post('/suggestion', [SuggestionController::class, 'post'])->name('suggestion.post');
