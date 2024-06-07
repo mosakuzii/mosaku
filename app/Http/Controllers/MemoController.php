@@ -15,7 +15,7 @@ class MemoController extends Controller{
 
     public function index(Request $request){
         if(Auth::check()){
-            $memos = Memo::with('tags')->where('user_id', Auth::id())->get();
+            $memos = Memo::with('tags')->with('notebook')->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
             $notebooks = Notebook::where('user_id', Auth::id())->get();
             $tags = User::find(Auth::id())->tags;
             return Inertia::render('App', ['memos' => $memos, 'notebooks' => $notebooks, 'tags' => $tags]);
@@ -29,15 +29,16 @@ class MemoController extends Controller{
         if(Auth::check()){
             $memo = Memo::create([
                 'user_id' => Auth::id(),
+                'notebook_id' => $request->notebook_id,
                 'title' => $request->title,
                 'content' => $request->content,
-                'pinned' => $request->pinned,
                 'starred' => $request->starred,
             ]);
-            $tags = collect($request->tags)->pluck('id')->filter()->unique();
+            $tags = collect($request->tags)->pluck('id');
             $memo->tags()->sync($tags);
-            $allMemos = Memo::with('tags')->where('user_id', Auth::id())->get();
-            return ['memoId' => $memo->id, 'allMemos' => $allMemos];
+            $memo = Memo::with('tags')->find($memo->id);
+            $allMemos = Memo::with('tags')->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+            return ['selectedMemo' => $memo, 'allMemos' => $allMemos];
         }
         else{
             Log::debug('ログイン認証されていない');
@@ -49,15 +50,17 @@ class MemoController extends Controller{
             if(Memo::where('id', $request->id)->where('user_id', Auth::id())->exists()){
                 //TODO: ProfileController.phpを参考に、validated()を使って、ここの処理を簡易化できそう
                 $memo = Memo::find($request->id);
+                $memo->notebook_id = $request->notebook_id;
                 $memo->title = $request->title;
                 $memo->content = $request->content;
-                $memo->pinned = $request->pinned;
                 $memo->starred = $request->starred;
                 $memo->save();
-                $tags = collect($request->tags)->pluck('id')->filter()->unique();
+
+                $tags = collect($request->tags)->pluck('id');
                 $memo->tags()->sync($tags);
-                $allMemos = Memo::with('tags')->where('user_id', Auth::id())->get();
-                return ['allMemos' => $allMemos];
+                $memo = Memo::with('tags')->find($memo->id);
+                $allMemos = Memo::with('tags')->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+                return ['selectedMemo' => $memo, 'allMemos' => $allMemos];
             }
             else{
                 Log::debug('メモが見つからない、またはユーザ所有のメモではない');
@@ -72,7 +75,7 @@ class MemoController extends Controller{
         if(Auth::check()){
             if(Memo::where('id', $memo_id)->where('user_id', Auth::id())->exists()){
                 Memo::find($memo_id)->delete();
-                $allMemos = Memo::with('tags')->where('user_id', Auth::id())->get();
+                $allMemos = Memo::with('tags')->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
                 return ['allMemos' => $allMemos];
             }
             else{

@@ -19,7 +19,7 @@ class TagController extends Controller
                 'tag_name' => $request->tag_name,
                 'tag_color' => $request->tag_color,
             ]);
-            return User::find(Auth::id())->tags;
+            return ['allTags' => User::find(Auth::id())->tags];
         }
         else{
             Log::debug('ログイン認証されていない');

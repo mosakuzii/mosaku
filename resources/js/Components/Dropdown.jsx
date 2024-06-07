@@ -6,24 +6,39 @@ const DropDownContext = createContext();
 
 const Dropdown = ({ children }) => {
     const [open, setOpen] = useState(false);
+    const [position, setPosition] = useState('bottom'); // 'bottom' or 'top'
 
     const toggleOpen = () => {
         setOpen((previousState) => !previousState);
     };
 
     return (
-        <DropDownContext.Provider value={{ open, setOpen, toggleOpen }}>
+        <DropDownContext.Provider value={{ open, setOpen, toggleOpen, position, setPosition }}>
             <div className="relative">{children}</div>
         </DropDownContext.Provider>
     );
 };
 
 const Trigger = ({ children }) => {
-    const { open, setOpen, toggleOpen } = useContext(DropDownContext);
+    const { open, setOpen, toggleOpen, setPosition } = useContext(DropDownContext);
+
+    const handleToggleOpen = (e) => {
+        const triggerRect = e.currentTarget.getBoundingClientRect();
+        const spaceBelow = window.innerHeight - triggerRect.bottom;
+        const spaceAbove = triggerRect.top;
+        
+        if (spaceBelow < 200 && spaceAbove > spaceBelow) {
+            setPosition('top');
+        } else {
+            setPosition('bottom');
+        }
+        
+        toggleOpen();
+    };
 
     return (
         <>
-            <div onClick={toggleOpen}>{children}</div>
+            <div onClick={handleToggleOpen}>{children}</div>
 
             {open && <div className="fixed inset-0 z-40" onClick={() => setOpen(false)}></div>}
         </>
@@ -31,7 +46,7 @@ const Trigger = ({ children }) => {
 };
 
 const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-white', children }) => {
-    const { open, setOpen } = useContext(DropDownContext);
+    const { open, setOpen, position } = useContext(DropDownContext);
 
     let alignmentClasses = 'origin-top';
 
@@ -47,6 +62,8 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-whit
         widthClasses = 'w-48';
     }
 
+    let positionClasses = position === 'top' ? 'bottom-full mb-2' : 'top-full mt-2';
+
     return (
         <>
             <Transition
@@ -60,7 +77,7 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-whit
                 leaveTo="opacity-0 scale-95"
             >
                 <div
-                    className={`absolute z-50 mt-2 rounded-md shadow-lg ${alignmentClasses} ${widthClasses}`}
+                    className={`absolute z-50 ${positionClasses} rounded-md shadow-lg ${alignmentClasses} ${widthClasses}`}
                     onClick={() => setOpen(false)}
                 >
                     <div className={`rounded-md ring-1 ring-black ring-opacity-5 ` + contentClasses}>{children}</div>

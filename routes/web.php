@@ -23,14 +23,11 @@ Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store')
 Route::post('/memo/update', [MemoController::class, 'update'])->name('memo.update');
 Route::delete('/memo/delete/{memo_id}', [MemoController::class, 'destroy'])->name('memo.delete');
 
-//タグCRUD
-Route::resource('/tag', TagController::class);
-
-//ノートブックAPI
-Route::resource('/notebook', NotebookController::class);
-
-//ページAPI
-Route::resource('/page', PageController::class);
+//Tag, Notebook, Page API
+Route::resources([
+    '/tag' => TagController::class,
+    '/notebook' => NotebookController::class,
+]);
 
 //目安箱送信
 Route::post('/suggestion', [SuggestionController::class, 'post'])->name('suggestion.post');

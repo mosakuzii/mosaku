@@ -16,7 +16,7 @@ export default function Header({user}){
                 <Dropdown.Trigger>
                     <span className="inline-flex rounded-md">
                         <button type="button"
-                            className="inline-flex items-center border border-transparent text-md leading-4 font-medium rounded-md text-gray-100 bg-green-800 hover:text-green-200 focus:outline-none transition ease-in-out duration-150">
+                            className="inline-flex items-center border border-transparent text-md leading-4 font-medium rounded-md text-white bg-green-600 hover:text-green-500 focus:outline-none transition ease-in-out duration-150">
                             {user.name}
                             <svg
                                 className="ms-2 -me-0.5 h-4 w-4"

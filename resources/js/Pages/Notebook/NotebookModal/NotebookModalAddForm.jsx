@@ -1,11 +1,10 @@
 import TextInput from "@/Components/TextInput";
-import { useContext, useState } from "react"
-import { NotebookContext } from "./Notebook"
+import axios from "axios";
+import { useContext, useState } from "react";
+import { NotebookContext } from "../Notebook";
 
-export default function NotebookList ({}){
+export default function NotebookModalForm({}) {
     const {allNotebooks, setAllNotebooks} = useContext(NotebookContext);
-    const {setSelectedNotebook} = useContext(NotebookContext);
-
     const [createNotebook, setCreateNotebook] = useState({
         title: '', theme_id: '', starred: false
     });
@@ -19,11 +18,9 @@ export default function NotebookList ({}){
             });
     };
     return (
-        <div>
-            NotebookList.jsx
-            <div className="md:flex items-center justify-between">
-                <TextInput
-                    id="notebook_title"
+        <div className="md:flex items-center justify-between">
+            <TextInput
+                id="notebook_title"
                     type="text"
                     name="notebook_title"
                     placeholder="ノートブック名"
@@ -31,15 +28,7 @@ export default function NotebookList ({}){
                     value={createNotebook.title}
                     onChange={(e) => setCreateNotebook({ ...createNotebook, title: e.target.value})}
                 />
-                <button className="bg-gray-500 text-white rounded-md p-1" onClick={() => storeNotebook()}>保存</button>
-            </div>
-            {allNotebooks && allNotebooks.map(notebook => (
-                <div key={notebook.id}
-                    className="bg-green-100 hover:bg-green-300"
-                    onClick={()=>setSelectedNotebook(notebook)}>
-                    {notebook.title}
-                </div>
-            ))}
+            <button className="bg-gray-500 text-white rounded-md p-1" onClick={() => storeNotebook()}>保存</button>
         </div>
     )
 }
