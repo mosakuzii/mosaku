@@ -19,7 +19,7 @@ class TagController extends Controller
                 'tag_name' => $request->tag_name,
                 'tag_color' => $request->tag_color,
             ]);
-            return ['allTags' => User::find(Auth::id())->tags];
+            return ['allTags' => Tag::with('memos')->where('user_id', Auth::id())->get()];
         }
         else{
             Log::debug('ログイン認証されていない');
@@ -30,9 +30,11 @@ class TagController extends Controller
     {
         if(Auth::check()){
             if(Tag::where('id', $tag_id)->where('user_id', Auth::id())->exists()){
-                Tag::find($tag_id)->delete();
-                $allTags = User::find(Auth::id())->tags;
-                $allMemos = Memo::with('tags')->where('user_id', Auth::id())->get();
+                $tag = Tag::find($tag_id);
+                $tag->memos()->detach();
+                $tag->delete();
+                $allTags = Tag::with('memos')->where('user_id', Auth::id())->get();
+                $allMemos = Memo::with('notebook')->with('tags')->where('user_id', Auth::id())->get();
                 return ['allMemos' => $allMemos, 'allTags' => $allTags];
             }
             else{
@@ -51,8 +53,8 @@ class TagController extends Controller
                 $tag->tag_name = $request->tag_name;
                 $tag->tag_color = $request->tag_color;
                 $tag->save();
-                $allTags = User::find(Auth::id())->tags;
-                $allMemos = Memo::with('tags')->where('user_id', Auth::id())->get();
+                $allTags = Tag::with('memos')->where('user_id', Auth::id())->get();
+                $allMemos = Memo::with('notebook')->with('tags')->where('user_id', Auth::id())->get();
                 return ['allMemos' => $allMemos, 'allTags' => $allTags];
             }
             else{

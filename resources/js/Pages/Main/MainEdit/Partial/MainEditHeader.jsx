@@ -41,8 +41,9 @@ export default function MainEditHeader({ submitMemo, deleteMemo }) {
                 <Dropdown>
                     <Dropdown.Trigger>
                         <p className="text-gray-500 cursor-pointer">
-                            {selectedMemo.notebook_id ?
-                                allNotebooks.find(notebook => notebook.id === selectedMemo.notebook_id).title : "ノート指定なし"}
+                            {selectedMemo.notebook_id === null ?
+                                "ノート指定なし" :
+                                allNotebooks.find(notebook => notebook.id === selectedMemo.notebook_id).title}
                         </p>
                     </Dropdown.Trigger>
                     <Dropdown.Content>

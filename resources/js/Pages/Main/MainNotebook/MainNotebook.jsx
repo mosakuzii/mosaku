@@ -4,11 +4,12 @@ import MainNotebookHeader from "./Partial/MainNotebookHeader";
 import MainNotebookList from "./Partial/MainNotebookList";
 
 export default function MainNotebook() {
-    const { setAllNotebooks } = useContext(AppContext);
+    const { setAllNotebooks, setAllMemos } = useContext(AppContext);
     const storeNotebook = async (notebook) => {
         await axios.post("notebook", notebook)
             .then(response => {
                 setAllNotebooks(response.data.allNotebooks);
+                setAllMemos(response.data.allMemos);
             })
             .catch(error => {
                 console.error("Error: ", error);
@@ -18,6 +19,7 @@ export default function MainNotebook() {
         await axios.put(`notebook/${notebook}`, notebook)
             .then(response => {
                 setAllNotebooks(response.data.allNotebooks);
+                setAllMemos(response.data.allMemos);
             })
             .catch(error => {
                 console.error("Error: ", error);
@@ -27,6 +29,7 @@ export default function MainNotebook() {
         await axios.delete(`notebook/${notebook.id}`, notebook.id)
             .then(response => {
                 setAllNotebooks(response.data.allNotebooks);
+                setAllMemos(response.data.allMemos);
             })
             .catch(error => {
                 console.error("Error: ", error);

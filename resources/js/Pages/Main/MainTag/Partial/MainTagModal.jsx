@@ -13,14 +13,12 @@ export default function MainTagModal({ open, onClose, renameTag, setRenameTag, u
                     ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}
             `}>
                 <input
-                    id="tag_color"
                     type="color"
                     name="tag_color"
                     value={renameTag.tag_color}
                     onChange={(e) => setRenameTag({...renameTag, tag_color: e.target.value})}
                 />
                 <TextInput
-                    id="tag_title"
                     type="text"
                     name="tag_title"
                     placeholder="タグ名"

@@ -16,9 +16,10 @@ class MemoController extends Controller{
     public function index(Request $request){
         if(Auth::check()){
             $memos = Memo::with('tags')->with('notebook')->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
-            $notebooks = Notebook::where('user_id', Auth::id())->get();
-            $tags = User::find(Auth::id())->tags;
-            return Inertia::render('App', ['memos' => $memos, 'notebooks' => $notebooks, 'tags' => $tags]);
+            $trashMemos = Memo::with('tags')->with('notebook')->onlyTrashed()->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+            $notebooks = Notebook::with('memos')->where('user_id', Auth::id())->get();
+            $tags = Tag::with('memos')->where('user_id', Auth::id())->get();
+            return Inertia::render('App', ['memos' => $memos, 'trashMemos' => $trashMemos, 'notebooks' => $notebooks, 'tags' => $tags]);
         }
         else{
             return redirect('entry');
@@ -36,9 +37,11 @@ class MemoController extends Controller{
             ]);
             $tags = collect($request->tags)->pluck('id');
             $memo->tags()->sync($tags);
-            $memo = Memo::with('tags')->find($memo->id);
-            $allMemos = Memo::with('tags')->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
-            return ['selectedMemo' => $memo, 'allMemos' => $allMemos];
+            $memo = Memo::with('notebook')->with('tags')->find($memo->id);
+            $allMemos = Memo::with('notebook')->with('tags')->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+            $allNotebooks = Notebook::with('memos')->where('user_id', Auth::id())->get();
+            $allTags = Tag::with('memos')->where('user_id', Auth::id())->get();
+            return ['selectedMemo' => $memo, 'allMemos' => $allMemos, 'allNotebooks' => $allNotebooks, 'allTags' => $allTags];
         }
         else{
             Log::debug('ログイン認証されていない');
@@ -58,9 +61,11 @@ class MemoController extends Controller{
 
                 $tags = collect($request->tags)->pluck('id');
                 $memo->tags()->sync($tags);
-                $memo = Memo::with('tags')->find($memo->id);
-                $allMemos = Memo::with('tags')->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
-                return ['selectedMemo' => $memo, 'allMemos' => $allMemos];
+                $memo = Memo::with('notebook')->with('tags')->find($memo->id);
+                $allMemos = Memo::with('notebook')->with('tags')->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+                $allNotebooks = Notebook::with('memos')->where('user_id', Auth::id())->get();
+                $allTags = Tag::with('memos')->where('user_id', Auth::id())->get();
+                return ['selectedMemo' => $memo, 'allMemos' => $allMemos, 'allNotebooks' => $allNotebooks, 'allTags' => $allTags];
             }
             else{
                 Log::debug('メモが見つからない、またはユーザ所有のメモではない');
@@ -75,8 +80,30 @@ class MemoController extends Controller{
         if(Auth::check()){
             if(Memo::where('id', $memo_id)->where('user_id', Auth::id())->exists()){
                 Memo::find($memo_id)->delete();
-                $allMemos = Memo::with('tags')->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
-                return ['allMemos' => $allMemos];
+                $allMemos = Memo::with('notebook')->with('tags')->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+                $trashMemos = Memo::with('tags')->with('notebook')->onlyTrashed()->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+                $allNotebooks = Notebook::with('memos')->where('user_id', Auth::id())->get();
+                $allTags = Tag::with('memos')->where('user_id', Auth::id())->get();
+                return ['allMemos' => $allMemos, 'trashMemos' => $trashMemos, 'allNotebooks' => $allNotebooks, 'allTags' => $allTags];
+            }
+            else{
+                Log::debug('メモが見つからない、またはユーザ所有のメモではない');
+            }
+        }
+        else{
+            Log::debug('ログイン認証されていない');
+        }
+    }
+
+    public function restore($memo_id){
+        if(Auth::check()){
+            if(Memo::withTrashed()->where('id', $memo_id)->where('user_id', Auth::id())->exists()){
+                Memo::withTrashed()->where('id', $memo_id)->restore();
+                $allMemos = Memo::with('notebook')->with('tags')->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+                $trashMemos = Memo::with('tags')->with('notebook')->onlyTrashed()->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+                $allNotebooks = Notebook::with('memos')->where('user_id', Auth::id())->get();
+                $allTags = Tag::with('memos')->where('user_id', Auth::id())->get();
+                return ['allMemos' => $allMemos, 'trashMemos' => $trashMemos, 'allNotebooks' => $allNotebooks, 'allTags' => $allTags];
             }
             else{
                 Log::debug('メモが見つからない、またはユーザ所有のメモではない');

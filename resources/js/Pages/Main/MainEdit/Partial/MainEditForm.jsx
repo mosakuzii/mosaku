@@ -1,15 +1,17 @@
 import { AppContext } from "@/Pages/App";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 export default function MainEditForm() {
     const { selectedMemo, setSelectedMemo } = useContext(AppContext);
     return (
         <div className="h-[calc(100vh-8rem)] bg-gray-100">
-            <textarea
-                id="memo_content"
-                value={selectedMemo.content}
+            <ReactQuill
+                theme="snow"
                 placeholder="文字を入力してください"
-                onChange={(e) => setSelectedMemo({...selectedMemo, content: e.target.value})}
+                value={selectedMemo.content}
+                onChange={(content) => setSelectedMemo({...selectedMemo, content})}
             />
         </div>
     )

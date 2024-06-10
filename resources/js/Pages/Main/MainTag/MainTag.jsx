@@ -26,6 +26,7 @@ export default function MainTag() {
     const destroyTag = async (tag) => {
         await axios.delete(`tag/${tag.id}`)
             .then(response => {
+                console.log(response.data.allTags);
                 setAllTags(response.data.allTags);
             })
             .catch(error => {

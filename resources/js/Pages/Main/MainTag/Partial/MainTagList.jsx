@@ -14,6 +14,7 @@ export default function MainTagList({ updateTag, destroyTag }) {
                 <div key={tag.id}
                     className="flex items-center justify-between h-8 bg-gray-100 px-2 hover:bg-gray-300">
                     <div className="flex">
+                        {tag.memos.length}
                         {tag.tag_name}
                     </div>
                     <MainTagModal

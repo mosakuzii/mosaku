@@ -22,6 +22,7 @@ Route::get('/', [MemoController::class, 'index'])->name('index');
 Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
 Route::post('/memo/update', [MemoController::class, 'update'])->name('memo.update');
 Route::delete('/memo/delete/{memo_id}', [MemoController::class, 'destroy'])->name('memo.delete');
+Route::post('/memo/restore/{memo_id}', [MemoController::class, 'restore'])->name('memo.restore');
 
 //Tag, Notebook, Page API
 Route::resources([

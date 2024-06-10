@@ -13,7 +13,10 @@ export default function SidebarNoteList() {
                     key={memo.id}
                     className="h-24 bg-green-50 hover:bg-green-200 cursor-pointer"
                     onClick={() => {setSelectedMemo(memo), console.log(memo)}}>
-                    <p>{memo.title}</p>
+                    {memo.title === null ?
+                        <p className="text-gray-600">無題のノート</p> :
+                        <p className="text-black">{memo.title}</p>
+                    }
                 </div>
             ))}
         </div>

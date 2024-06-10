@@ -14,6 +14,7 @@ export default function MainNotebookList({ updateNotebook, destroyNotebook }) {
                 <div key={notebook.id}
                     className="flex items-center justify-between h-8 bg-gray-100 px-2 hover:bg-gray-300">
                     <div className="flex">
+                        {notebook.memos.length}
                         {notebook.title}
                     </div>
                     <MainNotebookModal

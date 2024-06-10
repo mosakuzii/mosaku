@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class MemoTag extends Model
 {
+    protected $table = 'memo_tag';
     use HasFactory;
 }

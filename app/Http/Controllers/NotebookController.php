@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notebook;
+use App\Models\Memo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,7 @@ class NotebookController extends Controller
                 'title' => $request->title,
                 'starred' => $request->starred,
             ]);
-            $allNotebooks = Notebook::where('user_id', Auth::id())->get();
+            $allNotebooks = Notebook::with('memos')->where('user_id', Auth::id())->get();
             return ['allNotebooks' => $allNotebooks];
         }
         else{
@@ -57,7 +58,7 @@ class NotebookController extends Controller
                 $notebook->title = $request->title;
                 $notebook->starred = $request->starred;
                 $notebook->save();
-                $allNotebooks = Notebook::where('user_id', Auth::id())->get();
+                $allNotebooks = Notebook::with('memos')->where('user_id', Auth::id())->get();
                 return ['allNotebooks' => $allNotebooks];
             }
             else{
@@ -77,8 +78,10 @@ class NotebookController extends Controller
         if(Auth::check()){
             if(Notebook::where('id', $notebook_id)->where('user_id', Auth::id())->exists()){
                 Notebook::find($notebook_id)->delete();
-                $allNotebooks = Notebook::where('user_id', Auth::id())->get();
-                return ['allNotebooks' => $allNotebooks];
+                Memo::where('notebook_id', $notebook_id)->update(['notebook_id' => null]);
+                $allMemos = Memo::with('notebook')->with('tags')->where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+                $allNotebooks = Notebook::with('memos')->where('user_id', Auth::id())->get();
+                return ['allMemos' => $allMemos, 'allNotebooks' => $allNotebooks];
             }
             else{
                 Log::debug('ノートブックが見つからない、またはユーザ所有のメモではない');
