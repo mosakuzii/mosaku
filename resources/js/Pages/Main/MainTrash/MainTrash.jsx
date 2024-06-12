@@ -6,10 +6,8 @@ import MainTrashContent from "./Partial/MainTrashContent";
 export default function MainTrash() {
     const { selectedDeletedMemo, setSelectedDeletedMemo, setAllMemos, setDeletedMemos, setAllNotebooks, setAllTags } = useContext(AppContext);
     const restoreMemo = async() => {
-        console.log("Restore", selectedDeletedMemo);
         await axios.post(`/memo/restore/${selectedDeletedMemo.id}`)
             .then(response => {
-                console.log(response.data);
                 setAllMemos(response.data.allMemos);
                 setDeletedMemos(response.data.trashMemos);
                 setAllNotebooks(response.data.allNotebooks);

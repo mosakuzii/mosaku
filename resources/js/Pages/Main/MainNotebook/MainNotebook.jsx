@@ -6,34 +6,29 @@ import MainNotebookList from "./Partial/MainNotebookList";
 export default function MainNotebook() {
     const { setAllNotebooks, setAllMemos } = useContext(AppContext);
     const storeNotebook = async (notebook) => {
-        await axios.post("notebook", notebook)
-            .then(response => {
-                setAllNotebooks(response.data.allNotebooks);
-                setAllMemos(response.data.allMemos);
-            })
-            .catch(error => {
-                console.error("Error: ", error);
-            });
+        try{
+            const response = await axios.post("notebook", notebook);
+            await setAllNotebooks(response.data.allNotebooks);
+        }catch(error) {
+            console.error("Error: ", error);
+        }
     }
     const updateNotebook = async (notebook) => {
-        await axios.put(`notebook/${notebook}`, notebook)
-            .then(response => {
-                setAllNotebooks(response.data.allNotebooks);
-                setAllMemos(response.data.allMemos);
-            })
-            .catch(error => {
-                console.error("Error: ", error);
-            });
+        try{
+            const response = await axios.put(`notebook/${notebook}`, notebook);
+            await setAllNotebooks(response.data.allNotebooks);
+        }catch(error) {
+            console.error("Error: ", error);
+        }
     }
     const destroyNotebook = async (notebook) => {
-        await axios.delete(`notebook/${notebook.id}`, notebook.id)
-            .then(response => {
-                setAllNotebooks(response.data.allNotebooks);
-                setAllMemos(response.data.allMemos);
-            })
-            .catch(error => {
-                console.error("Error: ", error);
-            });
+        try{
+            const response = await axios.delete(`notebook/${notebook.id}`, notebook.id);
+            await setAllNotebooks(response.data.allNotebooks);
+            await setAllMemos(response.data.allMemos);
+        }catch(error) {
+            console.error("Error: ", error);
+        }
     }
 
     return (

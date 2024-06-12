@@ -5,6 +5,11 @@ import { useContext } from "react";
 
 export default function MainTrashContent({ restoreMemo }) {
     const { selectedDeletedMemo } = useContext(AppContext);
+    function stripHtmlTags(str) {
+        const div = document.createElement("div");
+        div.innerHTML = str;
+        return div.innerText;
+    }
     return (
         <div>
             <div className="h-18 bg-gray-300">
@@ -32,7 +37,7 @@ export default function MainTrashContent({ restoreMemo }) {
                 </p>
             </div>
             <div className="h-[calc(100vh-6rem)] bg-gray-100">
-                {selectedDeletedMemo.content}
+                {stripHtmlTags(selectedDeletedMemo.content)}
             </div>
             <div className="h-6 bg-gray-300 flex items-center">
                 {selectedDeletedMemo.tags.length === 0 ?

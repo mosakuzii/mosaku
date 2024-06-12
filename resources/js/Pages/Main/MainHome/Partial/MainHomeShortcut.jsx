@@ -5,6 +5,11 @@ import { useContext } from "react";
 export default function MainHomeShortcut() {
     const { allMemos, setMainMode, setSelectedMemo } = useContext(AppContext);
     const starredMemos = allMemos.filter(memo => memo.starred);
+    function stripHtmlTags(str) {
+        const div = document.createElement("div");
+        div.innerHTML = str;
+        return div.innerText;
+    }
     return (
         <div className="h-2/5 bg-gray-200">
             <div className="h-8 bg-gray-300 flex px-2">
@@ -21,7 +26,7 @@ export default function MainHomeShortcut() {
                             {memo.title}
                         </div>
                         <div className="text-gray-500 break-words">
-                            {memo.content}
+                            {stripHtmlTags(memo.content)}
                         </div>
                     </div>
                 ))}

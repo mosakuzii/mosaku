@@ -33,9 +33,7 @@ class TagController extends Controller
                 $tag = Tag::find($tag_id);
                 $tag->memos()->detach();
                 $tag->delete();
-                $allTags = Tag::with('memos')->where('user_id', Auth::id())->get();
-                $allMemos = Memo::with('notebook')->with('tags')->where('user_id', Auth::id())->get();
-                return ['allMemos' => $allMemos, 'allTags' => $allTags];
+                return ['allTags' => Tag::with('memos')->where('user_id', Auth::id())->get()];
             }
             else{
                 Log::debug('メモが見つからない、またはユーザ所有のメモではない');
@@ -53,9 +51,7 @@ class TagController extends Controller
                 $tag->tag_name = $request->tag_name;
                 $tag->tag_color = $request->tag_color;
                 $tag->save();
-                $allTags = Tag::with('memos')->where('user_id', Auth::id())->get();
-                $allMemos = Memo::with('notebook')->with('tags')->where('user_id', Auth::id())->get();
-                return ['allMemos' => $allMemos, 'allTags' => $allTags];
+                return ['allTags' => Tag::with('memos')->where('user_id', Auth::id())->get()];
             }
             else{
                 Log::debug('メモが見つからない、またはユーザ所有のメモではない');

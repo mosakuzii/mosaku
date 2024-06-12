@@ -1,22 +1,36 @@
 import Dropdown from "@/Components/Dropdown";
 import TextInput from "@/Components/TextInput";
 import { AppContext } from "@/Pages/App";
-import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { ArrowsPointingOutIcon, EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { useContext } from "react";
 
 export default function MainEditHeader({ submitMemo, deleteMemo }) {
-    const { selectedMemo, setSelectedMemo, allNotebooks } = useContext(AppContext);
+    const { selectedMemo, setSelectedMemo, allNotebooks, noteListOpen, setNoteListOpen } = useContext(AppContext);
+    const handleTitleChange = (e) => {
+        setSelectedMemo(prevState => ({
+            ...prevState,
+            title: e.target.value
+        }));
+    }
     return (
         <div className="h-18 bg-gray-300">
             <div className="flex items-center justify-between">
-                <TextInput
-                    id="memo_title"
-                    type="text"
-                    name="memo_title"
-                    placeholder="タイトル"
-                    value={selectedMemo.title}
-                    onChange={(e) => setSelectedMemo({...selectedMemo, title: e.target.value})}
-                />
+                <div className="flex">
+                    {noteListOpen && (
+                        <ArrowsPointingOutIcon
+                            className="h-6 w-6 cursor-pointer text-gray-800"
+                            onClick={() => setNoteListOpen(false)}
+                        />
+                    )}
+                    <TextInput
+                        id="memo_title"
+                        type="text"
+                        name="memo_title"
+                        placeholder="タイトル"
+                        value={selectedMemo.title}
+                        onChange={handleTitleChange}
+                    />
+                </div>
                 <Dropdown>
                     <Dropdown.Trigger>
                         <EllipsisVerticalIcon className="h-6 w-6 cursor-pointer text-gray-800" aria-hidden="true" />
@@ -30,7 +44,11 @@ export default function MainEditHeader({ submitMemo, deleteMemo }) {
                         {selectedMemo.id &&
                             <Dropdown.Item
                                 className="flex items-center cursor-pointer"
-                                onClick={deleteMemo}>
+                                onClick={() => {
+                                    const memoTitle = selectedMemo.title || "無題のノート";
+                                    if(window.confirm(`${memoTitle} を削除しますか？`)){
+                                        deleteMemo();
+                                    }}}>
                                     削除
                             </Dropdown.Item>
                         }

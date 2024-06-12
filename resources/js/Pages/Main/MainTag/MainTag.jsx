@@ -6,32 +6,28 @@ import MainTagList from "./Partial/MainTagList";
 export default function MainTag() {
     const { setAllTags } = useContext(AppContext);
     const storeTag = async (tag) => {
-        await axios.post("tag", tag)
-            .then(response => {
-                setAllTags(response.data.allTags);
-            })
-            .catch(error => {
-                console.error("Error: ", error);
-            });
+        try{
+            const response = await axios.post("tag", tag);
+            await setAllTags(response.data.allTags);
+        }catch(error) {
+            console.error("Error: ", error);
+        }
     }
     const updateTag = async (tag) => {
-        await axios.put(`tag/${tag}`, tag)
-            .then(response => {
-                setAllTags(response.data.allTags);
-            })
-            .catch(error => {
-                console.error("Error: ", error);
-            });
+        try{
+            const response = await axios.put(`tag/${tag}`, tag);
+            await setAllTags(response.data.allTags);
+        }catch(error) {
+            console.error("Error: ", error);
+        }
     }
     const destroyTag = async (tag) => {
-        await axios.delete(`tag/${tag.id}`)
-            .then(response => {
-                console.log(response.data.allTags);
-                setAllTags(response.data.allTags);
-            })
-            .catch(error => {
-                console.error("Error: ", error);
-            });
+        try{
+            const response = await axios.delete(`tag/${tag.id}`);
+            await setAllTags(response.data.allTags);
+        }catch(error) {
+            console.error("Error: ", error);
+        }
     }
     return (
         <div className="h-full w-full bg-white">

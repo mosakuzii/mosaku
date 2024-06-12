@@ -52,6 +52,7 @@ export default function MainHomeInstantMemo({ instantMemo, setInstantMemo, store
                 </button>
             </div>
             <ReactQuill
+                className="bg-white"
                 theme="bubble"
                 placeholder="文字を入力してください"
                 value={instantMemo.content}

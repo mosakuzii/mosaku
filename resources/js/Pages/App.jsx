@@ -11,11 +11,11 @@ export default function App({ auth, memos, trashMemos, notebooks, tags }) {
     const [allNotebooks, setAllNotebooks] = useState(notebooks);
     const [allTags, setAllTags] = useState(tags);
     const [mainMode, setMainMode] = useState("home");
+    const [noteListOpen, setNoteListOpen] = useState(false);
     const [selectedMemo, setSelectedMemo] = useState({
-        notebook_id: null, title: "", content: "", starred: false, tags: []});
+        id: null, notebook_id: null, title: null, content: null, starred: false, tags: []});
     const [selectedDeletedMemo, setSelectedDeletedMemo] = useState({
-        notebook_id: null, title: "", content: "", starred: false, tags: []});
-
+        id: null, notebook_id: null, title: null, content: null, starred: false, tags: []});
     return (
         <AppContext.Provider
             value={{
@@ -25,6 +25,7 @@ export default function App({ auth, memos, trashMemos, notebooks, tags }) {
                 allNotebooks, setAllNotebooks,
                 allTags, setAllTags,
                 mainMode, setMainMode,
+                noteListOpen, setNoteListOpen,
                 selectedMemo, setSelectedMemo,
                 selectedDeletedMemo, setSelectedDeletedMemo}}>
             <div className="h-full flex flex-row h-screen">
@@ -36,9 +37,9 @@ export default function App({ auth, memos, trashMemos, notebooks, tags }) {
                         <Sidebar />
                     </div>
                 </div>
-                <div className={`h-full
-                    ${mainMode === "edit" || mainMode === "trash" ?
-                        "relative left-1/4 w-1/2" : "w-3/4"} bg-green-100 p-4`}>
+                <div className={`h-full bg-green-100 p-4
+                    ${((noteListOpen && mainMode === "edit") || mainMode === "trash") ?
+                        "relative left-1/4 w-1/2" : "w-3/4"}`}>
                     <Main />
                 </div>
             </div>
