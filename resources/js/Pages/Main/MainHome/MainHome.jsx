@@ -5,13 +5,11 @@ import MainHomeShortcut from "./Partial/MainHomeShortcut";
 
 export default function MainHome() {
     return (
-        <div className="h-full w-full bg-white">
+        <div className="h-full w-full">
             <MainHomeHeader />
-            <div className="h-[calc(100vh-4rem)] bg-gray-100">
-                <MainHomeInstant />
-                <MainHomeShortcut />
-                <MainHomeRecent />
-            </div>
+            <MainHomeInstant />
+            <MainHomeShortcut />
+            <MainHomeRecent />
         </div>
     )
 }

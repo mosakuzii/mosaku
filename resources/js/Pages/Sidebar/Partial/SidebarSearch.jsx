@@ -1,3 +1,5 @@
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
 import { AppContext } from "@/Pages/App";
 import { BookOpenIcon, PencilIcon, TagIcon } from "@heroicons/react/20/solid";
 import { useContext } from "react";
@@ -5,32 +7,39 @@ import { useContext } from "react";
 export default function SidebarSearch() {
     const { setMainMode, setSelectedMemo, setNoteListOpen } = useContext(AppContext);
     return (
-        <div className="h-24">
-            <div className="h-12 bg-green-100 flex items-center justify-center">
-                <button className="w-full bg-green-300 hover:bg-green-500 cursor-pointer">
+        <div className="h-36 bg-green-50 px-2">
+            <TextInput
+                id="search"
+                type="text"
+                name="search"
+                placeholder="検索"
+                className="w-full h-12"
+            />
+            <div className="h-12 flex items-center justify-center">
+                <PrimaryButton className="w-full h-10 bg-green-300 hover:bg-green-500">
                     <div className="flex items-center justify-center"
                         onClick={() => {setMainMode("edit"), setNoteListOpen(false), setSelectedMemo({
                             notebook_id: null, title: "", content: "", starred: false, tags: []})}}>
-                        <PencilIcon className="h-5 w-5 m-1" />
-                        <p>新しいメモ</p>
+                        <PencilIcon className="h-8 w-8 text-gray-600" />
+                        <p className="ml-1 text-gray-600 text-base">ノート</p>
                     </div>
-                </button>
+                </PrimaryButton>
             </div>
-            <div className="h-12 bg-green-100 flex items-center justify-between">
-                <button className="w-1/2 bg-green-300 hover:bg-green-500 cursor-pointer">
+            <div className="h-12 flex items-center justify-center">
+                <PrimaryButton className="w-2/3 h-10 mr-1 bg-cyan-300 hover:bg-cyan-500">
                     <div className="flex items-center justify-center"
                         onClick={() => {setMainMode("notebook"), setNoteListOpen(false)}}>
-                        <BookOpenIcon className="h-5 w-5 m-1" />
-                        <p>新しいノートブック</p>
+                        <BookOpenIcon className="h-8 w-8 text-gray-600" />
+                        <p className="ml-1 text-gray-600 text-base">ノートブック</p>
                     </div>
-                </button>
-                <button className="w-1/2 bg-green-300 hover:bg-green-500 cursor-pointer">
+                </PrimaryButton>
+                <PrimaryButton className="w-1/3 h-10 ml-1 bg-yellow-300 hover:bg-yellow-500">
                     <div className="flex items-center justify-center"
                         onClick={() => {setMainMode("tag"), setNoteListOpen(false)}}>
-                        <TagIcon className="h-5 w-5 m-1" />
-                        <p>新しいタグ</p>
+                        <TagIcon className="h-8 w-8 text-gray-600" />
+                        <p className="ml-1 text-gray-600 text-base">タグ</p>
                     </div>
-                </button>
+                </PrimaryButton>
             </div>
             {/* TODO: SidebarSearch.jsx */}
         </div>

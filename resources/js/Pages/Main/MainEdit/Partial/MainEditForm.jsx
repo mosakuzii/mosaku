@@ -12,13 +12,12 @@ export default function MainEditForm() {
         }));
     }
     return (
-        <div className="h-[calc(100vh-8rem)] bg-gray-100">
-            <ReactQuill
-                theme="snow"
-                placeholder="文字を入力してください"
-                value={selectedMemo.content}
-                onChange={handleContentChange}
-            />
-        </div>
+        <ReactQuill
+            className="bg-white h-[calc(100%-10rem)] react-quill-custom"
+            theme="snow"
+            placeholder="文字を入力してください"
+            value={selectedMemo.content}
+            onChange={handleContentChange}
+        />
     )
 }

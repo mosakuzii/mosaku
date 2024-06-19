@@ -9,12 +9,12 @@ import MainTrash from "./MainTrash/MainTrash";
 export default function Main() {
     const { mainMode } = useContext(AppContext);
     return (
-        <div>
+        <>
             {mainMode === "home" && <MainHome />}
             {mainMode === "edit" && <MainEdit />}
             {mainMode === "notebook" && <MainNotebook />}
             {mainMode === "tag" && <MainTag />}
             {mainMode === "trash" && <MainTrash />}
-        </div>
+        </>
     )
 }

@@ -1,6 +1,8 @@
 import Dropdown from "@/Components/Dropdown";
+import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { AppContext } from "@/Pages/App";
+import { PencilIcon } from "@heroicons/react/20/solid";
 import { useContext } from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
@@ -8,8 +10,12 @@ import 'react-quill/dist/quill.bubble.css';
 export default function MainHomeInstantMemo({ instantMemo, setInstantMemo, storeInstantMemo }) {
     const { allNotebooks, allTags } = useContext(AppContext);
     return (
-        <div className="flex flex-col">
-            <div className="flex items-center justify-between">
+        <div className="h-full flex flex-col shadow-xl bg-orange-50">
+            <div className="h-8 w-full flex items-center">
+                <PencilIcon className="h-5 w-5" />
+                インスタントメモ
+            </div>
+            <div className="h-12 flex items-center justify-between">
                 <TextInput
                     id="instant_memo_title"
                     type="text"
@@ -19,14 +25,14 @@ export default function MainHomeInstantMemo({ instantMemo, setInstantMemo, store
                     onChange={(e) => setInstantMemo({...instantMemo, title: e.target.value})}
                 />
                 <div
-                    className="cursor-pointer"
+                    className={`cursor-pointer ${instantMemo.starred ? "bg-green-500" : "bg-green-200"}`}
                     onClick={() => setInstantMemo({...instantMemo, starred: !instantMemo.starred})}>
                     {instantMemo.starred ?
                         "お気に入り解除" :
                         "お気に入り"}
                 </div>
             </div>
-            <div className="flex items-center justify-between">
+            <div className="h-8 flex items-center justify-between">
                 <Dropdown>
                     <Dropdown.Trigger>
                         <p className="text-gray-500 cursor-pointer">
@@ -45,20 +51,22 @@ export default function MainHomeInstantMemo({ instantMemo, setInstantMemo, store
                         ))}
                     </Dropdown.Content>
                 </Dropdown>
-                <button
-                    className="bg-green-300"
+                <PrimaryButton
+                    className="bg-orange-300 hover:bg-orange-500"
                     onClick={storeInstantMemo}>
                     保存
-                </button>
+                </PrimaryButton>
             </div>
-            <ReactQuill
-                className="bg-white"
-                theme="bubble"
-                placeholder="文字を入力してください"
-                value={instantMemo.content}
-                onChange={(content) => setInstantMemo({...instantMemo, content})}
-            />
-            <div className="mt-auto h-6 bg-gray-300 flex items-center justify-between">
+            <div className="flex-1">
+                <ReactQuill
+                    className="bg-yellow-50 h-full"
+                    theme="bubble"
+                    placeholder="文字を入力してください"
+                    value={instantMemo.content}
+                    onChange={(content) => setInstantMemo({...instantMemo, content})}
+                />
+            </div>
+            <div className="h-8 mt-auto bg-orange-50 flex items-center justify-between">
                 <span className="flex items-center">
                     {instantMemo.tags.map((tag) => (
                         <p key={tag.id}

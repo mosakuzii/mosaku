@@ -1,7 +1,9 @@
 import Dropdown from "@/Components/Dropdown";
+import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { AppContext } from "@/Pages/App";
-import { ArrowsPointingOutIcon, EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { ArrowsPointingOutIcon, BookOpenIcon, ChevronDoubleDownIcon, ChevronDoubleRightIcon, EllipsisVerticalIcon, StarIcon as StarIconSolid, TrashIcon } from "@heroicons/react/20/solid";
+import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { useContext } from "react";
 
 export default function MainEditHeader({ submitMemo, deleteMemo }) {
@@ -12,25 +14,45 @@ export default function MainEditHeader({ submitMemo, deleteMemo }) {
             title: e.target.value
         }));
     }
+    const formatDate = (dateString) => {
+        if(dateString === undefined) return "";
+        else{
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const hour = date.getHours();
+            const minute = date.getMinutes();
+            return `最終更新: ${year}年${month}月${day}日 ${hour}:${minute}`;
+        }
+    }
     return (
-        <div className="h-18 bg-gray-300">
+        <div className="h-32">
             <div className="flex items-center justify-between">
-                <div className="flex">
-                    {noteListOpen && (
-                        <ArrowsPointingOutIcon
-                            className="h-6 w-6 cursor-pointer text-gray-800"
-                            onClick={() => setNoteListOpen(false)}
-                        />
-                    )}
-                    <TextInput
-                        id="memo_title"
-                        type="text"
-                        name="memo_title"
-                        placeholder="タイトル"
-                        value={selectedMemo.title}
-                        onChange={handleTitleChange}
+                {noteListOpen ?
+                    <ArrowsPointingOutIcon
+                        className="h-6 w-6 cursor-pointer text-gray-500"
+                        onClick={() => setNoteListOpen(false)}
+                    />:
+                    <ChevronDoubleRightIcon
+                        className="h-6 w-6 cursor-pointer text-gray-500"
+                        onClick={() => setNoteListOpen(true)}
                     />
+                }
+                <div className="mr-2 text-gray-400">
+                    {formatDate(selectedMemo.updated_at)}
                 </div>
+            </div>
+            <div className="flex items-center justify-between">
+                <TextInput
+                    id="memo_title"
+                    type="text"
+                    name="memo_title"
+                    placeholder="タイトル"
+                    className="w-full text-2xl border-0 shadow-none"
+                    value={selectedMemo.title}
+                    onChange={handleTitleChange}
+                />
                 <Dropdown>
                     <Dropdown.Trigger>
                         <EllipsisVerticalIcon className="h-6 w-6 cursor-pointer text-gray-800" aria-hidden="true" />
@@ -39,7 +61,15 @@ export default function MainEditHeader({ submitMemo, deleteMemo }) {
                         <Dropdown.Item
                             className="flex items-center cursor-pointer"
                             onClick={() => setSelectedMemo({...selectedMemo, starred: !selectedMemo.starred})}>
-                            {selectedMemo.starred ? "お気に入り解除" : "お気に入り"}
+                            {selectedMemo.starred ? 
+                                <div className="flex items-center">
+                                    <StarIconOutline className="h-5 w-5 mr-1" />
+                                    <p>お気に入り解除</p>
+                                </div>:
+                                <div className="flex items-center">
+                                    <StarIconSolid className="h-5 w-5 mr-1" />
+                                    <p>お気に入り登録</p>
+                                </div>}
                         </Dropdown.Item>
                         {selectedMemo.id &&
                             <Dropdown.Item
@@ -49,18 +79,19 @@ export default function MainEditHeader({ submitMemo, deleteMemo }) {
                                     if(window.confirm(`${memoTitle} を削除しますか？`)){
                                         deleteMemo();
                                     }}}>
-                                    削除
+                                    <TrashIcon className="h-5 w-5 mr-1" />
+                                    <p>削除</p>
                             </Dropdown.Item>
                         }
                     </Dropdown.Content>
                 </Dropdown>
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between pl-3">
                 <Dropdown>
                     <Dropdown.Trigger>
                         <p className="text-gray-500 cursor-pointer">
                             {selectedMemo.notebook_id === null ?
-                                "ノート指定なし" :
+                                "ノートブック指定なし" :
                                 allNotebooks.find(notebook => notebook.id === selectedMemo.notebook_id).title}
                         </p>
                     </Dropdown.Trigger>
@@ -75,11 +106,11 @@ export default function MainEditHeader({ submitMemo, deleteMemo }) {
                         ))}
                     </Dropdown.Content>
                 </Dropdown>
-                <button
-                    className="bg-green-300"
+                <PrimaryButton
+                    className="bg-green-500 hover:bg-green-700"
                     onClick={submitMemo}>
                     保存
-                </button>
+                </PrimaryButton>
             </div>
         </div>
     )

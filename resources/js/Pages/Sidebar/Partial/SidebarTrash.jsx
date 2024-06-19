@@ -8,7 +8,7 @@ export default function SidebarTrash() {
     return (
         <div className="mt-auto">
             <div
-                className="h-12 bg-gray-100 hover:bg-gray-200 cursor-pointer flex items-center justify-start"
+                className={`h-12 ${mainMode === "trash" ? "bg-gray-100" : "bg-gray-50"} hover:bg-gray-100 cursor-pointer flex items-center`}
                 onClick={() => {setMainMode("trash"), setNoteListOpen(false)}}>
                 <TrashIcon className="h-5 w-5 m-1" />
                 <p>ゴミ箱</p>

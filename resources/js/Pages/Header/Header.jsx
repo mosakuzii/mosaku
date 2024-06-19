@@ -2,21 +2,18 @@ import Dropdown from '@/Components/Dropdown';
 import { ArrowLeftStartOnRectangleIcon, Cog6ToothIcon, EnvelopeIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 import SettingModal from './Setting/SettingModal';
-import SuggestionModal from './Suggestion/SuggestionModal';
 
-export default function Header({user}){
+export default function Header({ user, openSuggestionModal, setOpenSuggestionModal }){
     const [openSetttingModal, setOpenSetttingModal] = useState(false);
-    const [openSuggestionModal, setOpenSuggestionModal] = useState(false);
     return (
         <div className="flex items-center justify-between">
             <SettingModal user={user} open={openSetttingModal} onClose={() => setOpenSetttingModal(false)} />
-            <SuggestionModal user={user} open={openSuggestionModal} onClose={() => setOpenSuggestionModal(false)} />
             <img src="/images/logo.png" className="h-12 w-12" />
             <Dropdown>
                 <Dropdown.Trigger>
                     <span className="inline-flex rounded-md">
                         <button type="button"
-                            className="inline-flex items-center border border-transparent text-md leading-4 font-medium rounded-md text-white bg-green-600 hover:text-green-500 focus:outline-none transition ease-in-out duration-150">
+                            className="inline-flex items-center border border-transparent text-md leading-4 font-medium rounded-md text-white bg-green-700 hover:text-green-500 focus:outline-none transition ease-in-out duration-150">
                             {user.name}
                             <svg
                                 className="ms-2 -me-0.5 h-4 w-4"

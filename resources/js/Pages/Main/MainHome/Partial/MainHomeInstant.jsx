@@ -23,18 +23,12 @@ export default function MainHomeInstant() {
             });
     }
     return (
-        <div className="h-2/5 bg-gray-200">
-            <div className="h-8 w-full bg-gray-300 flex px-2">
-                <PencilIcon className="h-5 w-5 mr-1" />
-                インスタントメモ
-            </div>
-            <div className="h-[calc(40vh-3rem)] bg-gray-100">
-                <MainHomeInstantMemo
-                    instantMemo={instantMemo}
-                    setInstantMemo={setInstantMemo}
-                    storeInstantMemo={storeInstantMemo}
-                 />
-            </div>
+        <div className="h-[calc(2*(100%-8rem)/5)] p-4">
+            <MainHomeInstantMemo
+                instantMemo={instantMemo}
+                setInstantMemo={setInstantMemo}
+                storeInstantMemo={storeInstantMemo}
+             />
         </div>
     )
 }

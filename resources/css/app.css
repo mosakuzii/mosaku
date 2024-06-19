@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.react-quill-custom .ql-container,
+.react-quill-custom .ql-toolbar {
+  border: none !important;
+}

@@ -10,9 +10,22 @@ export default function MainTrashContent({ restoreMemo }) {
         div.innerHTML = str;
         return div.innerText;
     }
+    const formatDate = (dateString) => {
+        if (dateString === undefined) return "";
+        else{
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            return `最終更新: ${year}年${month}月${day}日`;
+        }
+    }
     return (
         <div>
             <div className="h-18 bg-gray-300">
+                <div className="text-gray-600">
+                    {formatDate(selectedDeletedMemo.updated_at)}
+                </div>
                 <div className="flex items-center justify-between">
                     {selectedDeletedMemo.title === null ?
                         <p className="text-gray-600">無題のノート</p> :

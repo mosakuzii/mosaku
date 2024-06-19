@@ -37,10 +37,12 @@ export default function MainEdit() {
         }
     }
     return (
-        <div className="h-full w-full bg-white">
-            <MainEditHeader submitMemo={submitMemo} deleteMemo={deleteMemo} />
-            <MainEditForm />
-            <MainEditFooter />
+        <div className="h-full w-full p-2">
+            <div className="h-full rounded-md shadow-lg border-2">
+                <MainEditHeader submitMemo={submitMemo} deleteMemo={deleteMemo} />
+                <MainEditForm />
+                <MainEditFooter />
+            </div>
         </div>
     )
 }
