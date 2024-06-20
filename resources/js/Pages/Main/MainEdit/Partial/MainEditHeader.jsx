@@ -59,7 +59,7 @@ export default function MainEditHeader({ submitMemo, deleteMemo }) {
                     </Dropdown.Trigger>
                     <Dropdown.Content>
                         <Dropdown.Item
-                            className="flex items-center cursor-pointer"
+                            className="w-auto min-w-max flex items-center cursor-pointer"
                             onClick={() => setSelectedMemo({...selectedMemo, starred: !selectedMemo.starred})}>
                             {selectedMemo.starred ? 
                                 <div className="flex items-center">
@@ -73,7 +73,7 @@ export default function MainEditHeader({ submitMemo, deleteMemo }) {
                         </Dropdown.Item>
                         {selectedMemo.id &&
                             <Dropdown.Item
-                                className="flex items-center cursor-pointer"
+                                className="w-auto min-w-max flex items-center cursor-pointer"
                                 onClick={() => {
                                     const memoTitle = selectedMemo.title || "無題のノート";
                                     if(window.confirm(`${memoTitle} を削除しますか？`)){

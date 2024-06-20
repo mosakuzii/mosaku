@@ -32,9 +32,9 @@ export default function MainNotebook() {
     }
 
     return (
-        <div className="h-full w-full bg-white">
-            <MainNotebookHeader storeNotebook={storeNotebook} />
-            <div className="h-[calc(100vh-5rem)] bg-gray-100">
+        <div className="h-full w-full p-2">
+            <div className="h-full rounded-md shadow-lg border-2">
+                <MainNotebookHeader storeNotebook={storeNotebook} />
                 <MainNotebookList updateNotebook={updateNotebook} destroyNotebook={destroyNotebook} />
             </div>
         </div>

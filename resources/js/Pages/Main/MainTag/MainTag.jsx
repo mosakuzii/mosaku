@@ -30,9 +30,9 @@ export default function MainTag() {
         }
     }
     return (
-        <div className="h-full w-full bg-white">
-            <MainTagHeader storeTag={storeTag} />
-            <div className="h-[calc(100vh-5rem)] bg-gray-100">
+        <div className="h-full w-full p-2">
+            <div className="h-full rounded-md shadow-lg border-2">
+                <MainTagHeader storeTag={storeTag} />
                 <MainTagList updateTag={updateTag} destroyTag={destroyTag} />
             </div>
         </div>

@@ -1,5 +1,5 @@
 import { AppContext } from "@/Pages/App";
-import { BookOpenIcon, TrashIcon } from "@heroicons/react/20/solid";
+import { BookOpenIcon, StarIcon, TrashIcon } from "@heroicons/react/20/solid";
 import { useContext } from "react";
 
 export default function SidebarTrashList() {
@@ -37,36 +37,40 @@ export default function SidebarTrashList() {
                 ゴミ箱
             </div>
             {deletedMemos.map((memo) => (
-                <div
-                    key={memo.id}
-                    className="h-24 bg-gray-50 hover:bg-gray-200 cursor-pointer border"
+                <div key={memo.id}
+                    className="h-32 flex items-center bg-gray-50 hover:bg-gray-200 cursor-pointer border"
                     onClick={() => setSelectedDeletedMemo(memo)}>
-                    <div className="w-full text-gray-500 text-sm">
-                        {memo.notebook_id === null ?
-                            <div>ノート指定なし</div>:
-                            <div className="flex items-center">
-                                <BookOpenIcon className="h-4 w-4 mr-1" />{memo.notebook.title}
-                            </div>}
-                    </div>
-                    <div className="text-gray-500 border-b-2 text-ellipsis overflow-hidden">
-                        {memo.title === null ?
-                            <p className="text-gray-600">無題のノート</p> :
-                            <p className="text-black">{memo.title}</p>
-                        }
-                    </div>
-                    <div className="text-gray-600 text-ellipsis overflow-hidden">
-                        {stripHtmlTags(memo.content)}
-                    </div>
-                    <div className="text-gray-400 text-sm flex items-center justify-start px-1">
-                        {formatDate(memo.updated_at)}
-                        {getDisplayedTags(memo.tags).map(tag => (
-                            <div key={tag.id}
-                                className="max-w-16 mx-1 px-1 text-ellipsis overflow-hidden bg-gray-200">
-                                {tag.tag_name}
+                    <div className="w-full px-2">
+                        <div className="text-gray-500 text-sm flex justify-between">
+                            {memo.notebook_id === null ?
+                                <div>ノート指定なし</div>:
+                                <div className="flex items-center">
+                                    <BookOpenIcon className="h-4 w-4 mr-1" />{memo.notebook.title}
+                                </div>}
+                            <div>
+                                {memo.starred === 1 && <StarIcon className="h-4 w-4 text-gray-500" />}
                             </div>
-                        ))}
-                        {getRemainingTagsCount(memo.tags) > 0 &&
-                            "+" + getRemainingTagsCount(memo.tags)}
+                        </div>
+                        <div className="text-gray-500 border-b-2 text-ellipsis overflow-hidden">
+                            {memo.title === null ?
+                                <p className="text-gray-600">無題のノート</p> :
+                                <p className="text-black">{memo.title}</p>
+                            }
+                        </div>
+                        <div className="text-gray-600 text-ellipsis overflow-hidden">
+                            {stripHtmlTags(memo.content)}
+                        </div>
+                        <div className="text-gray-400 text-sm flex items-center justify-start px-1 mt-3">
+                            {formatDate(memo.updated_at)}
+                            {getDisplayedTags(memo.tags).map(tag => (
+                                <div key={tag.id}
+                                    className="max-w-16 mx-1 px-1 text-ellipsis overflow-hidden bg-gray-200">
+                                    {tag.tag_name}
+                                </div>
+                            ))}
+                            {getRemainingTagsCount(memo.tags) > 0 &&
+                                "+" + getRemainingTagsCount(memo.tags)}
+                        </div>
                     </div>
                 </div>
             ))}

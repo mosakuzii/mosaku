@@ -29,7 +29,8 @@ export default function App({ auth, memos, trashMemos, notebooks, tags }) {
                 mainMode, setMainMode,
                 noteListOpen, setNoteListOpen,
                 selectedMemo, setSelectedMemo,
-                selectedDeletedMemo, setSelectedDeletedMemo}}>
+                selectedDeletedMemo, setSelectedDeletedMemo,
+                openSuggestionModal, setOpenSuggestionModal}}>
             <div className="h-full flex flex-row h-screen">
                 <div className="h-full w-1/4">
                     <div className='h-12 bg-green-700 px-2'>

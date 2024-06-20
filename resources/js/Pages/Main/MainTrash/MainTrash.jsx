@@ -19,8 +19,10 @@ export default function MainTrash() {
             });
     }
     return (
-        <div className="h-full w-full bg-white">
-            <MainTrashContent restoreMemo={restoreMemo} />
+        <div className="h-full w-full p-2">
+            <div className="rounded-md shadow-lg border-2">
+                <MainTrashContent restoreMemo={restoreMemo} />
+            </div>
         </div>
     )
 }

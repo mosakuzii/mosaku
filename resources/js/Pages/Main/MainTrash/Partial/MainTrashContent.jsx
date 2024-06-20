@@ -1,6 +1,6 @@
 import Dropdown from "@/Components/Dropdown";
 import { AppContext } from "@/Pages/App";
-import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { ArrowUturnLeftIcon, EllipsisVerticalIcon, TagIcon } from "@heroicons/react/20/solid";
 import { useContext } from "react";
 
 export default function MainTrashContent({ restoreMemo }) {
@@ -21,47 +21,53 @@ export default function MainTrashContent({ restoreMemo }) {
         }
     }
     return (
-        <div>
-            <div className="h-18 bg-gray-300">
-                <div className="text-gray-600">
-                    {formatDate(selectedDeletedMemo.updated_at)}
-                </div>
-                <div className="flex items-center justify-between">
+        <>
+        <div className="h-32 bg-gray-300">
+            <div className="flex items-center justify-end mr-2">
+                {formatDate(selectedDeletedMemo.updated_at)}
+            </div>
+            <div className="flex items-center justify-between">
+                <p className="w-full text-2xl text-black">
                     {selectedDeletedMemo.title === null ?
-                        <p className="text-gray-600">無題のノート</p> :
-                        <p className="text-black">{selectedDeletedMemo.title}</p>
-                    }
-                    <Dropdown>
-                        <Dropdown.Trigger>
-                            <EllipsisVerticalIcon className="h-6 w-6 cursor-pointer text-gray-800" aria-hidden="true" />
-                        </Dropdown.Trigger>
-                        <Dropdown.Content>
-                            <Dropdown.Item
-                                className="flex items-center cursor-pointer"
-                                onClick={restoreMemo}>
-                                ノートを復元する
-                            </Dropdown.Item>
-                        </Dropdown.Content>
-                    </Dropdown>
-                </div>
-                <p className="text-gray-500">
-                    {selectedDeletedMemo.notebook_id ?
-                        selectedDeletedMemo.notebook.title : "ノート指定なし"}
+                        "無題のノート":selectedDeletedMemo.title}
                 </p>
+                <Dropdown>
+                    <Dropdown.Trigger>
+                        <EllipsisVerticalIcon className="h-6 w-6 cursor-pointer text-gray-800" aria-hidden="true" />
+                    </Dropdown.Trigger>
+                    <Dropdown.Content>
+                        <Dropdown.Item
+                            className="w-auto min-w-max flex items-center cursor-pointer"
+                            onClick={restoreMemo}>
+                            <div className="flex items-center">
+                                <ArrowUturnLeftIcon className="h-4 w-4 mr-1" />
+                                <p>ノートを復元する</p>
+                            </div>
+                        </Dropdown.Item>
+                    </Dropdown.Content>
+                </Dropdown>
             </div>
-            <div className="h-[calc(100vh-6rem)] bg-gray-100">
-                {stripHtmlTags(selectedDeletedMemo.content)}
-            </div>
-            <div className="h-6 bg-gray-300 flex items-center">
-                {selectedDeletedMemo.tags.length === 0 ?
-                    <p className="text-gray-500">タグ指定なし</p> :
-                    selectedDeletedMemo.tags.map((tag) => (
-                        <p key={tag.id}
-                            className="mr-2">
+            <p className="text-gray-500">
+                {selectedDeletedMemo.notebook_id ?
+                    selectedDeletedMemo.notebook.title : "ノート指定なし"}
+            </p>
+        </div>
+        <div className="h-[calc(100vh-11rem)] bg-gray-100">
+            {stripHtmlTags(selectedDeletedMemo.content)}
+        </div>
+        <div className="h-8 bg-gray-200 flex items-center mt-auto">
+            {selectedDeletedMemo.tags.length === 0 ?
+                <p className="text-gray-500">タグ指定なし</p> :
+                selectedDeletedMemo.tags.map((tag) => (
+                    <div key={tag.id}
+                        className="flex items-center bg-white rounded-md max-w-32 mr-2 px-2">
+                        <TagIcon className="h-4 w-4 mr-1" style={{ color: tag.tag_color }} />
+                        <p className="text-ellipsis overflow-hidden">
                             {tag.tag_name}
                         </p>
+                    </div>
                 ))}
-            </div>
         </div>
+        </>
     )
 }
