@@ -26,7 +26,7 @@ export default function SidebarSearch() {
                 </PrimaryButton>
             </div>
             <div className="h-12 flex items-center justify-center">
-                <PrimaryButton className="w-2/3 h-10 mr-1 bg-cyan-300 hover:bg-cyan-500">
+                <PrimaryButton className="w-2/3 h-10 mr-1 bg-blue-300 hover:bg-blue-500">
                     <div className="flex items-center justify-center"
                         onClick={() => {setMainMode("notebook"), setNoteListOpen(false)}}>
                         <BookOpenIcon className="h-8 w-8 text-gray-600" />

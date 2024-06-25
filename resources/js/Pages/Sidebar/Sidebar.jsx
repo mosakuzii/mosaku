@@ -18,7 +18,7 @@ export default function Sidebar({ user, openSuggestionModal, setOpenSuggestionMo
                 <SidebarTag />
                 <SidebarNotebook />
                 <SidebarTrash />
-                <div className="h-12 bg-gray-50 hover:bg-gray-100 cursor-pointer flex items-center justify-start"
+                <div className="h-12 bg-gray-50 hover:bg-gray-100 cursor-pointer flex items-center justify-start pl-6"
                     onClick={() => setOpenSuggestionModal(true)}>
                     <QuestionMarkCircleIcon className="h-5 w-5 ml-1" />
                     <p>お問い合わせ</p>

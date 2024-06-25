@@ -10,27 +10,10 @@ import 'react-quill/dist/quill.bubble.css';
 export default function MainHomeInstantMemo({ instantMemo, setInstantMemo, storeInstantMemo }) {
     const { allNotebooks, allTags } = useContext(AppContext);
     return (
-        <div className="h-full flex flex-col shadow-xl bg-orange-50">
+        <div className="h-full flex flex-col shadow-xl bg-red-50">
             <div className="h-8 w-full flex items-center">
                 <PencilIcon className="h-5 w-5" />
                 インスタントメモ
-            </div>
-            <div className="h-12 flex items-center justify-between">
-                <TextInput
-                    id="instant_memo_title"
-                    type="text"
-                    name="instant_memo_title"
-                    placeholder="タイトル"
-                    value={instantMemo.title}
-                    onChange={(e) => setInstantMemo({...instantMemo, title: e.target.value})}
-                />
-                <div
-                    className={`cursor-pointer ${instantMemo.starred ? "bg-green-500" : "bg-green-200"}`}
-                    onClick={() => setInstantMemo({...instantMemo, starred: !instantMemo.starred})}>
-                    {instantMemo.starred ?
-                        "お気に入り解除" :
-                        "お気に入り"}
-                </div>
             </div>
             <div className="h-8 flex items-center justify-between">
                 <Dropdown>
@@ -52,21 +35,21 @@ export default function MainHomeInstantMemo({ instantMemo, setInstantMemo, store
                     </Dropdown.Content>
                 </Dropdown>
                 <PrimaryButton
-                    className="bg-orange-300 hover:bg-orange-500"
+                    className="bg-red-300 hover:bg-red-500"
                     onClick={storeInstantMemo}>
                     保存
                 </PrimaryButton>
             </div>
             <div className="flex-1">
                 <ReactQuill
-                    className="bg-yellow-50 h-full"
+                    className="bg-orange-50 h-full"
                     theme="bubble"
                     placeholder="文字を入力してください"
                     value={instantMemo.content}
                     onChange={(content) => setInstantMemo({...instantMemo, content})}
                 />
             </div>
-            <div className="h-8 mt-auto bg-orange-50 flex items-center justify-between">
+            <div className="h-8 mt-auto bg-red-50 flex items-center justify-between">
                 <span className="flex items-center">
                     {instantMemo.tags.map((tag) => (
                         <p key={tag.id}

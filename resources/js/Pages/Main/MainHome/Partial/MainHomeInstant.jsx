@@ -9,7 +9,6 @@ export default function MainHomeInstant() {
         notebook_id: null, title: "", content: "", starred: false, tags: []});
 
     const storeInstantMemo = async () => {
-        console.log("storeInstantMemo", instantMemo);
         await axios.post("memo/store", instantMemo)
             .then(response => {
                 setAllMemos(response.data.allMemos);

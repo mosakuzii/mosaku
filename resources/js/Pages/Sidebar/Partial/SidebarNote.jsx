@@ -8,7 +8,7 @@ export default function SidebarNote() {
     return (
         <div>
             <div
-                className={`h-12 ${mainMode === "edit" ? "bg-green-100" : "bg-green-50"} hover:bg-green-100 cursor-pointer flex items-center`}
+                className={`h-12 ${mainMode === "edit" ? "bg-green-100" : "bg-green-50"} hover:bg-green-100 cursor-pointer flex items-center pl-6`}
                 onClick={() => {setMainMode("edit"), setNoteListOpen(true)}}>
                 <PencilSquareIcon className="h-5 w-5 m-1" />
                 <p>ノート</p>

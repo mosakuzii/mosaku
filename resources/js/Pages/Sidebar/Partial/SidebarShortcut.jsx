@@ -9,11 +9,11 @@ export default function SidebarShortcut() {
 
     return (
         <div className="max-h-60">
-            <div className="h-12 bg-green-50 flex items-center justify-start">
+            <div className="h-12 bg-green-50 flex items-center justify-start pl-6">
                 <StarIcon className="h-5 w-5 m-1" />
                 <p>お気に入りメモ</p>
             </div>
-            <div className="max-h-48 bg-green-100 overflow-y-auto">
+            <div className="max-h-48 bg-white overflow-y-auto pl-6">
                 {starredMemos.map(memo => (
                     <div
                         key={memo.id}
