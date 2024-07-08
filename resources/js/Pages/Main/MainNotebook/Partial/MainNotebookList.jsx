@@ -24,7 +24,6 @@ export default function MainNotebookList({ updateNotebook, destroyNotebook }) {
         return tags.slice(0, 2);
     }
     const getRemainingTagsCount = (tags) => tags.length > 3 ? tags.length - 2 : 0;
-    console.log(allNotebooks);
 
     return (
         <div className="h-[calc(100%-6rem)] w-full px-8 mt-4">
