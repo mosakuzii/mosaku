@@ -42,7 +42,13 @@ phases:
         git config --global credential.helper store
         echo "https://$CODECOMMIT_USERNAME:$CODECOMMIT_TOKEN@git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/mosaku" > ~/.git-credentials
         git pull origin master
+        php artisan config:cache
+        php artisan route:cache
+        php artisan cache:clear
+        php artisan view:cache
         php artisan migrate --force
+        npm cache clean --force
+        rm -rf ~/.npm
         rm -rf node_modules
         rm package-lock.json
         npm install
