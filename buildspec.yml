@@ -3,8 +3,8 @@ version: 0.2
 env:
   parameter-store:
     ssh_key: mosaku-ec2.pem
-    CODECOMMIT_USERNAME: mosakuzii-at-992382701478
-    CODECOMMIT_TOKEN: iE0mQkwvmBonI7QgfMUMdlPyk0UlxJDC4l37e9w9yzo=
+    CODECOMMIT_USERNAME: codecommit-username-parameter
+    CODECOMMIT_TOKEN: codecommit-token-parameter
 
 phases:
   install:
