@@ -34,8 +34,8 @@ phases:
       - echo Build completed on `date`
       - echo "$ssh_key" > ~/mosaku-ec2.pem
       - chmod 0600 ~/mosaku-ec2.pem
-      - cat ~/mosaku-ec2.pem
-      - ssh -o StrictHostKeyChecking=no -i ~/mosaku-ec2.pem ec2-user@52.193.94.244 << EOF
+      - |
+        ssh -o StrictHostKeyChecking=no -i ~/mosaku-ec2.pem ec2-user@52.193.94.244 << EOF
         cd /var/www/mosaku
         git pull origin master
         php artisan migrate --force
