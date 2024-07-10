@@ -3,6 +3,8 @@ version: 0.2
 env:
   parameter-store:
     ssh_key: mosaku-ec2.pem
+    CODECOMMIT_USERNAME: mosakuzii-at-992382701478
+    CODECOMMIT_TOKEN: iE0mQkwvmBonI7QgfMUMdlPyk0UlxJDC4l37e9w9yzo=
 
 phases:
   install:
@@ -37,6 +39,8 @@ phases:
       - |
         ssh -o StrictHostKeyChecking=no -i ~/mosaku-ec2.pem ec2-user@52.193.94.244 << EOF
         cd /var/www/mosaku
+        git config --global credential.helper store
+        echo "https://$CODECOMMIT_USERNAME:$CODECOMMIT_TOKEN@github.com" > ~/.git-credentials
         git pull origin master
         php artisan migrate --force
         npm install
