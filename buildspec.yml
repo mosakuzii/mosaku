@@ -43,6 +43,8 @@ phases:
         echo "https://$CODECOMMIT_USERNAME:$CODECOMMIT_TOKEN@git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/mosaku" > ~/.git-credentials
         git pull origin master
         php artisan migrate --force
+        rm -rf node_modules
+        rm package-lock.json
         npm install
         npm run build
         EOF
