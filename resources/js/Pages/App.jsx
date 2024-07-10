@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import AppDesktop from './AppDesktop';
-import AppMobile from './AppMobile';
+import AppDesktop from './Desktop/AppDesktop';
+import AppMobile from './Mobile/AppMobile';
 
 export const AppContext = createContext();
 
@@ -18,7 +18,7 @@ export default function App({ auth, memos, trashMemos, notebooks, tags }) {
     const [selectedDeletedMemo, setSelectedDeletedMemo] = useState({
         id: null, notebook_id: null, title: null, content: null, starred: false, tags: []});
 
-    const isDesktop = useMediaQuery({ query: '(min-width: 768px)' });
+    const isDesktop = useMediaQuery({ query: '(min-width: 769px)' });
 
     return (
         <AppContext.Provider

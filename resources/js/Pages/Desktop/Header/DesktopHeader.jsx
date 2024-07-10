@@ -6,7 +6,7 @@ import SettingModal from './Setting/SettingModal';
 export default function Header({ user, openSuggestionModal, setOpenSuggestionModal }){
     const [openSetttingModal, setOpenSetttingModal] = useState(false);
     return (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between bg-green-700 px-2">
             <SettingModal user={user} open={openSetttingModal} onClose={() => setOpenSetttingModal(false)} />
             <img src="/images/logo.png" className="h-12 w-12" />
             <Dropdown>

@@ -7,14 +7,14 @@ import { useContext } from "react";
 export default function SidebarSearch() {
     const { setMainMode, setSelectedMemo, setNoteListOpen } = useContext(AppContext);
     return (
-        <div className="h-36 bg-green-50 px-2">
-            <TextInput
+        <div className="h-24 bg-green-50 px-2">
+            {/* <TextInput
                 id="search"
                 type="text"
                 name="search"
                 placeholder="検索"
                 className="w-full h-12"
-            />
+            /> */}
             <div className="h-12 flex items-center justify-center">
                 <PrimaryButton className="w-full h-10 bg-green-300 hover:bg-green-500">
                     <div className="flex items-center justify-center"

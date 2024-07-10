@@ -11,7 +11,7 @@ export default function Sidebar({ user, openSuggestionModal, setOpenSuggestionMo
     return (
         <div className="h-full w-full">
             <SidebarSearch />
-            <div className="flex flex-col h-[calc(100vh-12rem)] bg-green-50">
+            <div className="flex flex-col h-[calc(100vh-9rem)] bg-green-50">
                 <SidebarHome />
                 <SidebarShortcut />
                 <SidebarNote />

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AppContext } from "../App";
+import { AppContext } from "../../App";
 import MainEdit from "./MainEdit/MainEdit";
 import MainHome from "./MainHome/MainHome";
 import MainNotebook from "./MainNotebook/MainNotebook";
@@ -9,12 +9,12 @@ import MainTrash from "./MainTrash/MainTrash";
 export default function Main() {
     const { mainMode } = useContext(AppContext);
     return (
-        <>
+        <div class="h-[calc(100%-3.5rem)] w-full">
             {mainMode === "home" && <MainHome />}
             {mainMode === "edit" && <MainEdit />}
             {mainMode === "notebook" && <MainNotebook />}
             {mainMode === "tag" && <MainTag />}
             {mainMode === "trash" && <MainTrash />}
-        </>
+        </div>
     )
 }

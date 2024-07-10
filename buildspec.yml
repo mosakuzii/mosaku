@@ -5,7 +5,7 @@ env:
     ssh_key: mosaku-ec2.pem
 
 phases:
-  build:
+  install:
     runtime-versions:
       php: 8.2
       nodejs: 18
@@ -19,22 +19,22 @@ phases:
       - curl -sS https://getcomposer.org/installer | php
       - mv composer.phar /usr/local/bin/composer
 
-  # pre_build:
-  #   commands:
-  #     - echo Starting pre-build phase...
-  #     - cp .env.example .env
+  pre_build:
+    commands:
+      - echo Starting pre-build phase...
+      - cp .env.example .env
 
-  # build:
-  #   commands:
-  #     - echo Build started on `date`
-  #     - composer install --no-interaction --prefer-dist
-  #     - php artisan key:generate
-  #     - npm install
-  #     - npm run build
+  build:
+    commands:
+      - echo Build started on `date`
+      - composer install --no-interaction --prefer-dist
+      - php artisan key:generate
+      - npm install
+      - npm run build
 
-  # post_build:
-  #   commands:
-  #     - echo Build completed on `date`
+  post_build:
+    commands:
+      - echo Build completed on `date`
 artifacts:
   files:
     - app/**
