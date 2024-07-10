@@ -19,7 +19,10 @@ export default defineConfig({
     build: {
         outDir: 'public/build',
         rollupOptions: {
-            input: 'resources/js/Pages/App.jsx',
+            input: [
+                'resources/js/app.jsx',
+                'resources/js/Pages/App.jsx',
+            ],
         }
     }
 });
