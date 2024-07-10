@@ -10,9 +10,6 @@ phases:
       php: 8.2
       nodejs: 18
     commands:
-      - echo "$ssh_key" > ~/mosaku-ec2.pem
-      - chmod 0600 ~/mosaku-ec2.pem
-      - ssh -i ~/mosaku-ec2.pem ec2-user@52.193.94.244
       - echo Installing dependencies...
       - sudo yum -y update
       - sudo yum -y install zip unzip
@@ -35,6 +32,13 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
+      - echo "$ssh_key" > ~/mosaku-ec2.pem
+      - chmod 0600 ~/mosaku-ec2.pem
+      - ssh -i ~/mosaku-ec2.pem ec2-user@52.193.94.244
+      - cd /var/www/mosaku
+      - git pull origin master
+      - php artisan migrate --force
+
 artifacts:
   files:
     - app/**
