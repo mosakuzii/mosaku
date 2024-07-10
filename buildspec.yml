@@ -47,7 +47,7 @@ phases:
         php artisan cache:clear
         php artisan view:cache
         php artisan migrate --force
-        npm cache clean --force
+        npm cache clean
         rm -rf ~/.npm
         rm -rf node_modules
         rm package-lock.json
